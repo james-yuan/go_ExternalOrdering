@@ -1,6 +1,6 @@
 package main 
 // how run
-// go run ***.go  编译切执行，内存不会保存编译后的文件
+// go run ***.go  编译且执行，内存不会保存编译后的文件
 // go build ***.go 或则 go build 会编译到当前文件下
 // go install 把当前用到的所有go编译安装到go的bin目录下
 import(

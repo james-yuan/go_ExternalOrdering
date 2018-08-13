@@ -2,7 +2,7 @@ package main
 import(
 	"fmt"
 	"os"
-	"github.com/myproject/bingfa/pipeline"
+	"github.com/bingfa/pipeline"
 	"bufio"
 	"strconv"
 	)
@@ -12,7 +12,7 @@ func main(){
 	outfile := "small.out"
 	p := createPipeline(infile,512,4)
 	writeToFile(p,outfile)
-	//printFile(outfile)
+	//readFile(outfile)
 }
 **/
 
@@ -21,10 +21,10 @@ func main(){
 	outfile := "small.out"
 	p := createNetworkPipeline(infile,512,4)
 	writeToFile(p,outfile)
-	printFile(outfile)
+	readFile(outfile)
 }
 
-func printFile(filename string){
+func readFile(filename string){
 	file , err := os.Open(filename)
 	if err != nil{
 		panic(err)
@@ -56,6 +56,7 @@ func createPipeline(filename string ,fileSize,chunkCount int) <-chan int{
 	pipeline.Init()
 	sortResults := []<-chan int{}
 	for i := 0 ; i < chunkCount ; i++{
+		//从file中分批读取，输入到channel中
 		file ,err := os.Open(filename)
 		if err != nil {
 			panic(err)
@@ -63,6 +64,7 @@ func createPipeline(filename string ,fileSize,chunkCount int) <-chan int{
 		file.Seek(int64(i * chunkSize),0)
 		source := pipeline.ReaderSource(
 			bufio.NewReader(file),chunkSize)
+
 		sortResults = append(sortResults,
 			pipeline.InMemSort(source))
 	}
