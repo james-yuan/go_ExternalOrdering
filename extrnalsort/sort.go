@@ -2,10 +2,10 @@ package main
 import(
 	"fmt"
 	"os"
-	"github.com/myproject/bingfa/pipeline"
 	"bufio"
 	"strconv"
-	)
+	"github.com/bingfa/pipeline"
+)
 /**
 func main(){
 	infile := "small.in" 
