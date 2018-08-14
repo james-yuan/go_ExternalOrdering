@@ -27,7 +27,7 @@ func ArraySource(a ...int) <-chan int{
 	return out
 }
 
-// 内排序
+// 内排序：channel包装--借助slice对channel中的元素排序
 //  <- 表示 in 只读,只出不进
 func InMemSort(in <-chan int) <-chan int{
 	out := make(chan int);
@@ -46,12 +46,15 @@ func InMemSort(in <-chan int) <-chan int{
 	}()
 	return out
 }
-// 合并
+// 合并--归并排序
+//
 func Merge(in1, in2 <-chan int) <-chan int{
 	out :=make(chan int)
 	go func(){
 		v1,ok1 := <- in1
 		v2,ok2 := <- in2
+
+		//循环接收数据，将较小者放入out
 		for ok1 || ok2 {
 			if !ok2 || (ok1 && v1 <= v2){
 				out <- v1
@@ -120,6 +123,7 @@ func MergeN(inputs ...<-chan int) <-chan int{
 	}
 
 	m := len(inputs) / 2
+
 	return Merge(
 		MergeN(inputs[:m]...),
 		MergeN(inputs[m:]...))
