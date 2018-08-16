@@ -36,12 +36,14 @@ func main() {
 	//estChanType()
 
 	//处理channel超时
+	//common.JdugeTimeout()
+	//common.JudgeTimeoutByContext()
 
-	//search by goroutine使用场景
-	//  https://www.cnblogs.com/suoning/p/7237444.html
+	//select使用
+	//common.ProcessQuit()
 
 	//pub/sub mode
-	pubsubMode();
+	//pubsubMode();
 }
 
 func pubsubMode(){
